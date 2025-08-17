@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <style type="text/css" media="screen"></style>
+    <script src="index.js"></script>
+  <title>Simple AI Chatbot</title>
+    <style>
+        @media screen and (max-width: 768px) {
+  body {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+}
+        h1{
+            text-align: center;
+            color: antiquewhite;
+            box-shadow:5px 0px 0px rgb(0, 0, 0), 0px 0px 50px rgb(255, 224, 86);background-color:rgb(90, 182, 239);
+            animation: myColorChanges;
+        animation-play-state: running;
+        animation-duration: 15s;
+        }
+         @keyframes myColorChanges{
+        15%{background-color: black;}
+        25%{background-color: rgb(11, 223, 230);}
+        35%{background-color: rgb(43, 226, 70);}
+        45%{background-color: rgb(255, 242, 1);}
+        55%{background-color: rgb(185, 73, 255);}
+        65%{background-color: rgb(198, 17, 159);}
+        75%{background-color: beige;}
+        85%{background-color: rgb(255, 77, 12);}
+        95%{background-color: rgb(255, 162, 0);}
+        105%{background-color: blanchedalmond;}
+        }
+         body{background-image:url("image 9.png");
+            background-repeat: no repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            }
+        body { font-family: Arial, sans-serif; }
+        .chat-container { max-width: 500px; margin: auto;padding:430px; }
+        .messages { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; box-shadow:5px 0px 0px rgb(0, 0, 0), 0px 0px 50px rgb(255, 224, 86);background-color:rgb(90, 182, 239);}  
+        .input { margin-top: 15px; }
+        h2{
+            text-align: center;
+            color: aliceblue;
+            transform: rotateX(180deg);
+            transform: rotatey(180deg);
+        }
+        @keyframes blink {
+         0% { opacity: 1; }
+         50% { opacity: 0; }
+          100% { opacity: 1; }
+}
+
+.blinking-text {
+  animation: blink 1s infinite;
+  color: aliceblue;
+  text-align: center;
+ 
+}
+i{
+     font-size: 60px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>CHAT WITH VIN</h1>
+    <p class="blinking-text"><i>ASK ME!!</p></i>
+    <div class="chat-container">
+        <div class="messages" id="messages"></div>
+        <div class="input">
+            <input type="text" id="userInput" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    
+    <script>
+        window.onload =function(){
+            alert('Welcome to VINCHAT,feel free to ask whats on your mind');
+        }
+        const responses = {
+            'hello': 'Hi there! How can I help you today?',
+    'hi': 'Hello! What can I do for you?',
+    'hey': 'Hey there! Need any help?',
+    'how are you': 'I am just a program, but I am doing great! How about you?',
+    'what is your name': 'My name is Peter Ariane!',
+    'who are you': 'I am your friendly assistant!',
+    'bye': 'Goodbye! Have a great day!',
+    'goodbye': 'See you later! Take care!',
+    'help': 'Sure! You can ask me things like "hello", "how are you", "what is your name", or say "bye".',
+    'thank you': 'You’re very welcome!',
+    'thanks': 'No problem!',
+    'what can you do': 'I can chat with you, answer simple questions, and keep you company!',
+    'who created you': 'I was created by a team of developers who love AI!',
+    'tell me a joke': 'Why don’t scientists trust atoms? Because they make up everything!',
+    'what is the time': 'I can’t access the current time, but you can check your device clock!',
+    'what is the date': 'I don’t have real-time access, but your device should show the date.',
+    'how old are you': 'Age doesn’t really apply to software, but I was created recently!',
+    'do you like me': 'Of course! I’m here to chat with you anytime.',
+    'are you real': 'I’m real in a virtual kind of way!',
+    'do you have feelings': 'Not quite — I understand emotions, but I don’t feel them.',
+    'can you help me': 'Absolutely! What do you need help with?',
+    'i am sad': 'I’m sorry to hear that. Want to talk about it?',
+    'you are smart': 'Thank you! I try my best.',
+    'you are funny': 'Haha, I do try to crack a few jokes!',
+    'sing a song': 'La la la! 🎶 I wish I had a better voice!',
+    'what is ai': 'AI stands for Artificial Intelligence — machines that can learn and make decisions.',
+    'what is python': 'Python is a popular programming language known for its simplicity.',
+    
+        'who is cristiano ronaldo': 'Cristiano Ronaldo is a Portuguese footballer widely considered one of the greatest players of all time.',
+    'who is lionel messi': 'Lionel Messi is an Argentine football legend and World Cup winner.',
+    'what is football': 'Football (or soccer) is a team sport played between two teams of 11 players with a spherical ball.',
+    'what is basketball': 'Basketball is a team sport where two teams try to score by throwing a ball through the opponent’s hoop.',
+    'who won the last world cup': 'I can’t access live data, but you can check FIFA.com for the latest results.',
+
+     'what is mathematics': 'Mathematics is the study of numbers, quantities, shapes, and patterns.',
+    'what is physics': 'Physics is the science of matter, motion, energy, and forces.',
+    'what is biology': 'Biology is the study of living organisms and life processes.',
+    'who is albert einstein': 'Albert Einstein was a theoretical physicist known for the theory of relativity.',
+    'what is history': 'History is the study of past events, particularly in human affairs.',
+    'who invented the computer': 'Charles Babbage is often credited with inventing the first mechanical computer.',
+
+     'who is joe biden': 'Joe Biden is the 46th President of the United States, elected in 2020.',
+    'who was barack obama': 'Barack Obama was the 44th President of the United States, serving from 2009 to 2017.',
+    'who is vladimir putin': 'Vladimir Putin is the President of Russia.',
+    'who is nelson mandela': 'Nelson Mandela was a South African leader who helped end apartheid and became the country’s first Black president.',
+    'who is abraham lincoln': 'Abraham Lincoln was the 16th U.S. president, known for ending slavery and leading during the Civil War.',
+
+     'what is the biggest country': 'Russia is the largest country in the world by land area.',
+    'what is the smallest country': 'Vatican City is the smallest country in the world.',
+    'what is the tallest mountain': 'Mount Everest is the tallest mountain in the world, standing at 8,848 meters.',
+    'what is the longest river': 'The Nile River in Africa is often considered the longest river in the world.',
+    'what is the capital of france': 'The capital of France is Paris.',
+    'what is climate change': 'Climate change refers to long-term shifts in temperatures and weather patterns, largely caused by human activities.',
+
+    'who are lil vin and lex qauv': 'Lil Vin and Lex Qauv are a Ugandan drill duo who started their journey as close friends in primary school and rose to fame from the streets of Kikoni.',
+    
+    'where did lil vin and lex qauv grow up': 'They grew up in Kikoni, a vibrant neighborhood near Makerere in Uganda.',
+
+    'how did lil vin and lex qauv meet': 'They met in primary school, where Lil Vin dropped a freestyle in class that caught Lex Qauv’s attention — it was the start of a powerful bond.',
+
+    'what was their first moment of connection': 'It was when Lil Vin freestyled in class, and Lex Qauv immediately recognized the potential. From then, they supported each other through every debate and challenge.',
+
+    'who is david in their story': 'David was their close friend and original third member. He shared the early dream with them before stepping away respectfully. They continue to carry the torch in his honor.',
+
+    'what does their friendship mean': 'Their bond is deeper than music — it’s about brotherhood, belief, and pushing each other forward even when no one’s watching.',
+
+    'how did they start making music': 'They began by freestyling in corners, sharing small rooms, borrowing speakers, and writing lyrics during sleepless nights. They built their sound from scratch.',
+
+    'what is the song principal about': '“Principal” is their breakout track — not just a song, but a bold statement that shook the local scene and put them on the map.',
+
+    'what makes lil vin unique': 'Lil Vin delivers bars that are sharp, emotional, and honest — every line carries weight and purpose.',
+
+    'what makes lex qauv unique': 'Lex Qauv brings raw, unfiltered drill energy — his voice hits like war, but his message is pure art.',
+
+    'what genre do they perform': 'They perform drill music, blending Ugandan experiences with global sounds to create a unique, fearless style.',
+
+    'what do they stand for': 'They stand for authenticity, struggle, and the voice of the youth. They represent every dreamer who comes from nothing but dares to be something.',
+
+    'what was their biggest challenge': 'They faced tough odds — no money, no equipment, and no power at times — but they never gave up. They created through the struggle.',
+
+    'what is their message to fans': 'You don’t need to have everything to start something great. Believe, stay real, and never let the struggle define you.',
+
+    'what is their ultimate goal': 'To be the voice of a generation and show that from Kikoni to the world, greatness can rise.',
+    
+    'are lil vin and lex qauv still making music': 'Yes! They’re just getting started — their bond, energy, and vision continue to grow with every track.',
+
+    'who is lionel messi': 'Lionel Messi is an Argentine football legend and World Cup winner.',
+    'what is football': 'Football (or soccer) is a team sport played between two teams of 11 players with a spherical ball.',
+    'what is basketball': 'Basketball is a team sport where two teams try to score by throwing a ball through the opponent’s hoop.',
+    'who won the last world cup': 'I can’t access live data, but you can check FIFA.com for the latest results.',
+    'what is tennis': 'Tennis is a racket sport played individually or in pairs, where players aim to hit a ball over a net into the opponent’s court.',
+    'who is lebron james': 'LeBron James is an American professional basketball player considered one of the greatest in NBA history.',
+    'what is the nba': 'The NBA (National Basketball Association) is a professional basketball league in North America composed of 30 teams.',
+    'who is serena williams': 'Serena Williams is an American tennis champion known for her powerful play and numerous Grand Slam titles.',
+    'what is the olympics': 'The Olympics are a major international sporting event held every four years featuring summer and winter sports competitions.',
+    'what is a goal in football': 'A goal in football is scored when the entire ball crosses the goal line between the posts and under the crossbar.',
+    'who is neymar': 'Neymar is a Brazilian footballer known for his flair, dribbling skills, and international success with Brazil and club teams.',
+    'what is a basketball dunk': 'A basketball dunk is a high-impact shot where a player jumps and scores by forcefully putting the ball directly through the hoop.',
+    'who is usain bolt': 'Usain Bolt is a retired Jamaican sprinter and Olympic gold medalist, widely regarded as the fastest man in history.',
+    'what is the world cup': 'The World Cup is an international football tournament held every four years, organized by FIFA, featuring teams from around the globe.'
+}
+
+
+
+        
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value.trim();
+            if (!userInput) return; // ignore empty input
+
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+
+            // Find a response
+            const response = responses[userInput.toLowerCase()] || 'I\'m not sure how to respond to that.';
+
+            messagesDiv.innerHTML += `<p><strong>VINBOT:</strong> ${response}</p>`;
+
+            // Scroll to the bottom
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // Clear input
+            document.getElementById('userInput').value = '';
+        }
+    </script>
+</body>
+</html>
